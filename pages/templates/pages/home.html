@@ -1,0 +1,118 @@
+{% extends 'bases/base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 mb-5" style="border-bottom: 1px solid #EEEEEE">
+				<h1 style='font-size: 3.25em; color: #27bb07; font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace'>
+					Live Code Test</h1>
+			</div>
+
+			<div class="container mx-5 mb-5 contained-section">
+				<h1 class="contained-section-head">Welcome</h1>
+				<p class="general-info mx-5 text-center" style="font-size: 1.5em;">This is a mock site created
+					specifically to see how you develop. It's your time to show off your skills in both frontend and
+					backend programming. So enjoy, have fun with it!</p>
+			</div>
+
+			<div class="container mx-5 mb-5 contained-section">
+				<div class="col-md-12">
+					<h1 class="contained-section-head">Top Submissions</h1>
+					<p class="general-info mb-5 text-center" style="font-size: 1.75em">Enjoy the top content available
+						currently</p>
+					<div class="top-submissions">
+						{% for submission in submissions %}
+							<div class="submission">
+								<button class="submission-preview" data-bs-toggle="modal" data-bs-target="#contentModal" data-lct-sid="{{ submission.id }}" data-lct-isrc="{{ submission.image.url }}" data-lct-author="{{ submission.author.username }}" data-lct-date="{{ submission.created_at }}">
+									<img src="{{ submission.image.url }}" class="img-responsive top-submission__item"/>
+								</button>
+								<div class="top-submission__item__info">
+									<p>Rating: <b>{{ submission.rating }}</b></p>
+									<p>Submitted by: <b>{{ submission.author.username }}</b></p>
+									<p class="mt-3" style="text-align: right"><i>{{ submission.created_at }}</i></p>
+									<div style="clear: both"></div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+
+			<div class="container mx-5 contained-section">
+				<h1 class="contained-section-head mb-4">Let's see your work!</h1>
+				<p class="general-info mx-5 text-center" style="font-size: 1.5em;">Upload your favorite image you
+					created here!</p>
+
+				<div class="align-center mt-5">
+					<button type="button" class="big-btn btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Now</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block body_extra %}
+	<!-- Modals -->
+	<div class="modal fade" id="contentModal" tabindex="-1" aria-labelledby="contentModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable wide-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="contentModalLabel">Submission</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="mb-3" style="display: contents">
+						<a class="d-flex" target="_blank" rel="noopener noreferrer" href="" id="submissionLink">
+							<img class="submission-viewer" id="submissionViewer" />
+						</a>
+					</div>
+					<div class="mb-3">
+						<label for="submissionAuthor" class="col-form-label">Poster:</label>
+						<input type="text" class="form-control" id="submissionAuthor" disabled />
+					</div>
+					<div class="mb-3">
+						<label for="submissionDate" class="col-form-label">Posted on:</label>
+						<input type="text" class="form-control" id="submissionDate" disabled />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="uploadModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		 aria-labelledby="uploadModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<form>
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="uploadModalLabel">Upload Your Submission</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="image" class="form-label">Image</label>
+							<input type="file" class="form-control" id="image" name="image">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-info">Upload</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript %}
+	<script src="{% static 'submissionModal.js' %}"></script>
+{% endblock %}

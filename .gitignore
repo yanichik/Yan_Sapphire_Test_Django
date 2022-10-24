@@ -1,0 +1,7 @@
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea
+
+db.sqlite3
+media/uploads
