@@ -23,7 +23,11 @@
 
 			<div class="container mx-5 mb-5 contained-section">
 				<div class="col-md-12">
+				{% if not submissions %}
+					<h1 class="contained-section-head">No submissions yet</h1>
+				{% else %}
 					<h1 class="contained-section-head">Top Submissions</h1>
+				{% endif %}
 					<p class="general-info mb-5 text-center" style="font-size: 1.75em">Enjoy the top content available
 						currently</p>
 					<div class="top-submissions">
@@ -46,12 +50,19 @@
 
 			<div class="container mx-5 contained-section">
 				<h1 class="contained-section-head mb-4">Let's see your work!</h1>
+				{% if request.user.is_authenticated %}
 				<p class="general-info mx-5 text-center" style="font-size: 1.5em;">Upload your favorite image you
 					created here!</p>
-
-				<div class="align-center mt-5">
-					<button type="button" class="big-btn btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Now</button>
-				</div>
+					<div class="align-center mt-5">
+						<button type="button" class="big-btn btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Now</button>
+					</div>
+					{% else %}
+					<p class="general-info mx-5 text-center" style="font-size: 1.5em;">Looks like you're logged out!</p>
+						<div class="align-center mt-5">
+							<!-- <button type="button" class="big-btn btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal">Login Here</button> -->
+							<button type="button" class="big-btn btn btn-lg btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal" onclick="window.location.href='http://localhost:8000/admin/';">Login Here</button>
+						</div>
+					{% endif %}
 			</div>
 		</div>
 	</div>
